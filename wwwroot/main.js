@@ -1,4 +1,7 @@
-const socket = new WebSocket('ws://127.0.0.1:80');
+const hostname = 'localhost'
+const port = 9000;
+const socket = new WebSocket(`ws://${hostname}:${port}`);
+console.log(`Trying to connect to ${hostname} at port ${port}`);
 
 socket.onmessage = ({ data }) => {
     console.log(`Message from server: ${data}`);
@@ -7,4 +10,8 @@ socket.onmessage = ({ data }) => {
 socket.onopen = () => {
     console.log('CONNECTED')
     socket.send('Hello!');
+};
+
+socket.onclose = () => {
+    console.log('CLOSED');
 };
