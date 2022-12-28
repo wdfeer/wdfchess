@@ -7,12 +7,15 @@ using WatsonWebsocket;
 namespace wdfchess_Server;
 internal class Program
 {
-    static void Main(string[] args)
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    public static WatsonWsServer server;
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    public static void Main(string[] args)
     {
         int port = 9000;
         if (args.Length > 0)
             port = int.Parse(args[0]);
-        WatsonWsServer server = new("localhost", port);
+        server = new WatsonWsServer("localhost", port);
         server.ClientConnected += Game.ClientConnected;
         server.ClientDisconnected += Game.ClientDisconnected;
         server.MessageReceived += Game.MessageReceived;

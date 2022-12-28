@@ -21,5 +21,6 @@ internal class Game
     public static void MessageReceived(object? sender, MessageReceivedEventArgs args)
     {
         Console.WriteLine("Message received from " + args.Client.ToString() + ": " + Encoding.UTF8.GetString(args.Data));
+        Program.server.SendAsync(args.Client.Guid, "no u");
     }
 }
