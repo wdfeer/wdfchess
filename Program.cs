@@ -16,9 +16,7 @@ internal class Program
         if (args.Length > 0)
             port = int.Parse(args[0]);
         server = new WatsonWsServer("localhost", port);
-        server.ClientConnected += Game.ClientConnected;
-        server.ClientDisconnected += Game.ClientDisconnected;
-        server.MessageReceived += Game.MessageReceived;
+        Game.Initialize(server);
         server.Start();
         Console.WriteLine("Server started. Press any key to stop");
         Console.ReadLine();
