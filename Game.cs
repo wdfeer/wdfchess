@@ -10,6 +10,7 @@ namespace wdfchess_Server;
 internal static class Game
 {
     static List<ClientMetadata> clients = new List<ClientMetadata>();
+    public static ClientMetadata? GetClient(Guid guid) => clients.Find(x => x.Guid == guid);
     public static void Initialize(WatsonWsServer server)
     {
         server.ClientConnected += ClientConnected;
@@ -33,8 +34,12 @@ internal static class Game
     public static void MessageReceived(object? sender, MessageReceivedEventArgs args)
     {
         string text = Encoding.UTF8.GetString(args.Data);
-        Console.WriteLine("Broadcasting message from " + args.Client.ToString() + ": " + text);
-        clients.Where(x => x.Guid != args.Client.Guid).ToList()
-            .ForEach(client => Program.server.SendAsync(client.Guid, text));
+        if (text[0] == 'r')
+        {
+            var client = GetClient(args.Client.Guid);
+            if (client == null) throw new ArgumentException("Client not found!");
+            client.Name = String.Concat(text.Skip(2));
+            Console.WriteLine("Set the client's name to " + client.Name);
+        }
     }
 }

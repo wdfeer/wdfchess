@@ -9,6 +9,13 @@
 </head>
 
 <body>
+    <form id="connect-form" onsubmit="connect(); return false;">
+        <input type="text" name="username" id="username-input" placeholder="USERNAME" required> <br>
+        <input type="text" name="ip" id="ip-input" placeholder="IP Address" required>
+        <input type="number" name="port" id="port-input" placeholder="PORT" required> <br>
+        <input type="submit" value="Connect">
+    </form>
+
     <script src="main.js"></script>
 </body>
 
