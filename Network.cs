@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 using WatsonWebsocket;
 
 namespace wdfchess_Server;
-internal static class Game
+internal static class Network
 {
+    public static WatsonWsServer server;
     static List<ClientMetadata> clients = new List<ClientMetadata>();
     public static ClientMetadata? GetClient(Guid guid) => clients.Find(x => x.Guid == guid);
     public static void Initialize(WatsonWsServer server)
     {
+        Network.server = server;
         server.ClientConnected += ClientConnected;
         server.ClientDisconnected += ClientDisconnected;
         server.MessageReceived += MessageReceived;
@@ -33,13 +35,32 @@ internal static class Game
 
     public static void MessageReceived(object? sender, MessageReceivedEventArgs args)
     {
-        string text = Encoding.UTF8.GetString(args.Data);
-        if (text[0] == 'r')
+        (MessageType type, string data) = ParseIncomingMessage(args.Data);
+        switch (type)
         {
-            var client = GetClient(args.Client.Guid);
-            if (client == null) throw new ArgumentException("Client not found!");
-            client.Name = String.Concat(text.Skip(2));
-            Console.WriteLine("Set the client's name to " + client.Name);
+            case MessageType.RegisterUsername:
+                var client = GetClient(args.Client.Guid);
+                if (client == null) throw new ArgumentException("Client not found!");
+                client.Name = data;
+                Console.WriteLine("Set the client's name to " + data);
+                break;
+            default:
+                break;
         }
+    }
+    public enum MessageType
+    {
+        RegisterUsername,
+        Unknown
+    }
+    static (MessageType, string) ParseIncomingMessage(ArraySegment<byte> data)
+    {
+        string text = Encoding.UTF8.GetString(data);
+        string textWithoutFirst2Chars = String.Concat(text.Skip(2));
+        return text[0] switch
+        {
+            'r' => (MessageType.RegisterUsername, textWithoutFirst2Chars),
+            _ => (MessageType.Unknown, text),
+        };
     }
 }
