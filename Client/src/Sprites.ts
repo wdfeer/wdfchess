@@ -1,6 +1,6 @@
 class Sprites {
     static loadPieceImage(path: string) {
-        let img = new Image(render.squareSize, render.squareSize);
+        let img = new Image(Render.squareSize, Render.squareSize);
         img.src = path;
         Elements.disableElement(img);
         return Elements.body.appendChild(img);

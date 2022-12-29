@@ -45,17 +45,21 @@ class Network {
         }
         function receiveConnected(username: string) {
             if (Game.isGaming()) return;
-            Network.send(MessageType.Start, Game.myName);
+            Game.amWhite = Math.random() < 0.5;
+            Network.send(MessageType.Start, `${Game.myName} ${Game.amWhite ? 1 : 0}`);
             Game.enemyName = username;
             Game.start();
         }
-        function receiveStart(username: string) {
+        function receiveStart(data: string) {
+            let args = data.split(' ');
             if (Game.isGaming()) return;
-            Game.enemyName = username;
+            Game.enemyName = args[0];
+            Game.amWhite = args[1] == '0'; // 1 when the enemy is white
             Game.start();
         }
         function receiveMove(move: string) {
-            throw new Error("UNIMPLEMENTED");
+            let coords = move.split(' ').map(str => Number.parseInt(str));
+            Game.move(coords[0], Game.mirrorY(coords[1]), coords[2], Game.mirrorY(coords[3]));
         }
     }
 }
