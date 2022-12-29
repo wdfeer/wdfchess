@@ -42,4 +42,11 @@ function drawBoard() {
             ctx.closePath();
         }
     }
+
+    drawPiece(kingWhite, 1, 1);
+    drawPiece(kingWhite, 2, 2);
+    drawPiece(kingBlack, 5, 5);
+}
+function drawPiece(image, x, y) {
+    ctx.drawImage(image, x * squareSize, y * squareSize, squareSize, squareSize);
 }
