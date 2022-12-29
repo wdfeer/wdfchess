@@ -9,8 +9,7 @@
 </head>
 
 <body>
-    <!-- should be the only thing enabled by default -->
-    <form class="disabled center" id="connect-form" onsubmit="connect(); return false;">
+    <form class="center" id="connect-form" onsubmit="connect(); return false;">
         <input type="text" name="username" id="username-input" placeholder="USERNAME" required> <br>
         <input type="text" name="ip" id="ip-input" placeholder="IP Address" required>
         <input type="number" name="port" id="port-input" placeholder="PORT" required> <br>
@@ -19,10 +18,9 @@
 
     <span class="disabled center" id="connected-text"></span>
 
-    <canvas class="center" width="1200" height="1200"></canvas>
+    <canvas class="disabled center" width="1200" height="1200"></canvas>
 
-    <script src="main.js"></script>
-    <script src="pieceImages.js"></script>
+    <script src="compiled.js"></script>
 </body>
 
 </html>

@@ -12,4 +12,8 @@
     <PackageReference Include="WatsonWebsocket" Version="4.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Client\src\" />
+  </ItemGroup>
+
 </Project>
