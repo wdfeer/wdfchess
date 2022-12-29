@@ -27,6 +27,8 @@ class Network {
         this.socket.onclose = () => {
             console.log('CLOSED');
         };
+
+        Game.myName = username;
     }
     static send(msgType: MessageType, data: string = '') {
         this.socket.send(`${msgType} ${data}`);
@@ -36,18 +38,20 @@ class Network {
             case MessageType.Connected:
                 return receiveConnected(data);
             case MessageType.Start:
-                return receiveStart();
+                return receiveStart(data);
             case MessageType.Move:
                 return receiveMove(data);
             default: break;
         }
         function receiveConnected(username: string) {
             if (Game.isGaming()) return;
-            Network.send(MessageType.Start);
+            Network.send(MessageType.Start, Game.myName);
+            Game.enemyName = username;
             Game.start();
         }
-        function receiveStart() {
+        function receiveStart(username: string) {
             if (Game.isGaming()) return;
+            Game.enemyName = username;
             Game.start();
         }
         function receiveMove(move: string) {
