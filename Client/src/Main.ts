@@ -37,3 +37,6 @@ Elements.connectForm.onsubmit = () => {
         Elements.usernameInputElement.value);
     return false;
 };
+Elements.canvas.onclick = (event: MouseEvent) => {
+    Game.onCanvasClick(event.offsetX, event.offsetY);
+}
