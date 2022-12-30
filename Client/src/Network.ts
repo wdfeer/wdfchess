@@ -44,7 +44,6 @@ class Network {
             default: break;
         }
         function receiveConnected(username: string) {
-            if (Game.isGaming()) return;
             Game.amWhite = Math.random() < 0.5;
             Network.send(MessageType.Start, `${Game.myName} ${Game.amWhite ? 1 : 0}`);
             Game.enemyName = username;
