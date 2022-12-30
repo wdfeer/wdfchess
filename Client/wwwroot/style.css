@@ -62,7 +62,7 @@ canvas {
     height: 700px;
 }
 
-.name {
+.right {
     position: absolute;
     right: auto;
 }

@@ -28,7 +28,7 @@ class Network {
             console.log('CLOSED');
         };
 
-        Game.myName = username;
+        Player.myName = username;
     }
     static send(msgType: MessageType, data: string = '') {
         this.socket.send(`${msgType} ${data}`);
@@ -41,29 +41,35 @@ class Network {
                 return receiveStart(data);
             case MessageType.Move:
                 return receiveMove(data);
+            case MessageType.Rematch:
+                return receiveRematch();
             default: break;
         }
         function receiveConnected(username: string) {
-            Game.amWhite = Math.random() < 0.5;
-            Network.send(MessageType.Start, `${Game.myName} ${Game.amWhite ? 1 : 0}`);
-            Game.enemyName = username;
+            Player.amWhite = Math.random() < 0.5;
+            Network.send(MessageType.Start, `${Player.myName} ${Player.amWhite ? 1 : 0}`);
+            Player.enemyName = username;
             Game.start();
         }
         function receiveStart(data: string) {
             let args = data.split(' ');
             if (Game.isGaming()) return;
-            Game.enemyName = args[0];
-            Game.amWhite = args[1] == '0'; // 1 when the enemy is white
+            Player.enemyName = args[0];
+            Player.amWhite = args[1] == '0'; // 1 when the enemy is white
             Game.start();
         }
         function receiveMove(move: string) {
             let coords = move.split(' ').map(str => Number.parseInt(str));
             Game.move(coords[0], Game.mirrorY(coords[1]), coords[2], Game.mirrorY(coords[3]));
         }
+        function receiveRematch() {
+            Player.receiveRematch();
+        }
     }
 }
 enum MessageType {
     Connected = 'r',
     Start = 's',
-    Move = 'm'
+    Move = 'm',
+    Rematch = 'S'
 }

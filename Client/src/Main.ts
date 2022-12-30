@@ -9,6 +9,10 @@ class Elements {
     static readonly myName = this.game.querySelector('#my-name') as HTMLSpanElement;
     static readonly enemyName = this.game.querySelector('#enemy-name') as HTMLSpanElement;
 
+    static readonly gameEndScreen = this.game.querySelector('#post-game') as HTMLSpanElement;
+    static readonly resultText = this.gameEndScreen.querySelector('#game-result') as HTMLSpanElement;
+    static readonly rematchButton = this.gameEndScreen.querySelector('#rematch-button') as HTMLButtonElement;
+
     static readonly ipInputElement = this.body.querySelector('#ip-input') as HTMLInputElement;
     static readonly portInputElement = this.body.querySelector('#port-input') as HTMLInputElement;
     static readonly usernameInputElement = this.body.querySelector('#username-input') as HTMLInputElement;
@@ -30,13 +34,16 @@ class Elements {
     }
 }
 
+setTimeout(() => {
+    Elements.connectForm.onsubmit = () => {
+        Network.connect(Elements.ipInputElement.value,
+            Number.parseInt(Elements.portInputElement.value),
+            Elements.usernameInputElement.value);
+        return false;
+    };
+    Elements.canvas.onclick = (event: MouseEvent) => {
+        Game.onCanvasClick(event.offsetX, event.offsetY);
+    }
 
-Elements.connectForm.onsubmit = () => {
-    Network.connect(Elements.ipInputElement.value,
-        Number.parseInt(Elements.portInputElement.value),
-        Elements.usernameInputElement.value);
-    return false;
-};
-Elements.canvas.onclick = (event: MouseEvent) => {
-    Game.onCanvasClick(event.offsetX, event.offsetY);
-}
+    Elements.rematchButton.onclick = () => Player.sendRematch();
+}, 5);

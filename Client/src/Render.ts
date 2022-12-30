@@ -26,12 +26,9 @@ class Render {
     }
     private static drawAllPieces() {
         Game.pieces.forEach(p => {
-            if (p.img != null) {
-                if (Game.selected == p)
-                    this.fillCell(p.x, p.y, 'green');
-                this.drawPiece(p.img, p.x, p.y);
-            }
-
+            if (Game.selected == p)
+                this.fillCell(p.x, p.y, 'green');
+            this.drawPiece(p.img, p.x, p.y);
         });
     }
     private static drawPiece(image: HTMLImageElement, column: number, row: number) {
