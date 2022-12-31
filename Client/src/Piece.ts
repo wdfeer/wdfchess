@@ -28,4 +28,7 @@ abstract class Piece {
         );
     }
     protected abstract canVirtuallyMove(toX: number, toY: number): boolean;
+
+
+    postMove(): void { }
 }

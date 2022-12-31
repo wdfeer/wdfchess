@@ -15,11 +15,7 @@ class Game {
         Player.restart();
 
         this.selected = null;
-        this.pieces = [
-            new King(0, this.boardSize - 1, true),
-            new Knight(1, this.boardSize - 1, true),
-            new King(this.boardSize - 1, 0, false),
-            new Knight(this.boardSize - 1, 1, false)];
+        this.setDefaultPosition();
         if (!Player.white) {
             this.pieces.forEach(p => p.y = this.mirrorY(p.y));
         }
@@ -31,6 +27,10 @@ class Game {
 
 
     static pieces: Piece[];
+    static anyPieceAt(x: number, y: number) { return this.pieces.some(p => p.x == x && p.y == y); }
+    static anyPieceOfColorAt(x: number, y: number, white: boolean) {
+        return this.pieces.some(p => p.white == white && p.x == x && p.y == y);
+    }
     static mirrorY(y: number) { return this.boardSize - 1 - y; }
     static tryMoveAsPlayer(x1: number, y1: number, x2: number, y2: number, netUpdate: boolean = false) {
         let moving = this.pieces.find(p => p.x == x1 && p.y == y1);
@@ -58,6 +58,7 @@ class Game {
             this.endGame(Player.white ? 1 : -1);
         }
 
+        moving.postMove();
         Render.redraw();
     }
     static forceMoveByCoords(x1: number, y1: number, x2: number, y2: number, netUpdate: boolean = false) {
@@ -102,5 +103,27 @@ class Game {
         else
             Player.onDraw();
         Player.updatePlayerNamesAndScoresDisplay();
+    }
+
+
+    private static setDefaultPosition(): void {
+        this.pieces = [];
+        function addPawns(y: number, white: boolean) {
+            for (let x = 0; x < Game.boardSize; x++) {
+                Game.pieces.push(new Pawn(x, y, white));
+            }
+        }
+        addPawns(1, false);
+        addPawns(6, true);
+        this.pieces.push(new King(4, 0, false));
+        this.pieces.push(new King(4, 7, true));
+        function addKnights(y: number, white: boolean) {
+            for (let x = 0; x < Game.boardSize; x++) {
+                if (x == 4) continue;
+                Game.pieces.push(new Knight(x, y, white));
+            }
+        }
+        addKnights(0, false);
+        addKnights(7, true);
     }
 }
