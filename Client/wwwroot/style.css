@@ -53,7 +53,7 @@ input {
 }
 
 span {
-    font-size: 2em;
+    font-size: 1.6em;
 }
 
 
@@ -65,4 +65,8 @@ canvas {
 .right {
     position: absolute;
     right: auto;
+}
+
+button {
+    font-size: larger;
 }
