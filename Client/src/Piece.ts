@@ -1,31 +1,31 @@
-class Piece {
-    type: string;
+abstract class Piece {
     constructor(
-        public img: HTMLImageElement,
         public x: number,
         public y: number,
-        type: string | undefined = undefined) {
-        if (type == undefined) {
-            this.type = Piece.getTypeFromImage(img);
-        } else this.type = type;
+        public white: boolean) {
+        this.image = this.getImage();
+        this.type = this.getType();
     }
-    private static getTypeFromImage(img: HTMLImageElement): string {
-        switch (img) {
-            case Sprites.kingWhite:
-                return 'K';
-            case Sprites.kingBlack:
-                return 'k';
-            case Sprites.knightWhite:
-                return 'N';
-            case Sprites.knightBlack:
-                return 'n';
-            default:
-                throw new Error("Failed to ascertain piece type!");
+
+    image: HTMLImageElement;
+    protected abstract getImage(): HTMLImageElement;
+    type: string;
+    protected abstract getType(): string;
+
+    getLegalMoves(): V2[] {
+        let allSquares: V2[] = [];
+        for (let x = 0; x < Game.boardSize; x++) {
+            for (let y = 0; y < Game.boardSize; y++) {
+                allSquares.push({ x: x, y: y });
+            }
         }
+        return allSquares.filter(v2 => this.canMove(v2.x, v2.y));
     }
 
-
-    isWhite() {
-        return this.type == this.type.toUpperCase();
+    canMove(toX: number, toY: number): boolean {
+        return this.canVirtuallyMove(toX, toY) && !Game.pieces.some(
+            p => p.white == this.white && p.x == toX && p.y == toY
+        );
     }
+    protected abstract canVirtuallyMove(toX: number, toY: number): boolean;
 }

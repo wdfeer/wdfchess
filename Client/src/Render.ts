@@ -1,3 +1,4 @@
+type CanvasStyle = string | CanvasPattern | CanvasGradient;
 class Render {
     static initialize() {
         this.squareSize = Elements.canvas.width / Game.boardSize
@@ -10,6 +11,7 @@ class Render {
         this.clear();
         this.drawGrid();
         this.drawAllPieces();
+        this.drawLegalMoves();
     }
 
     private static clear() {
@@ -21,27 +23,43 @@ class Render {
                 this.fillCell(j, i, ["#eeeed2", "#630"][(i + j) % 2])
             }
         }
-
-
     }
     private static drawAllPieces() {
         Game.pieces.forEach(p => {
             if (Game.selected == p)
                 this.fillCell(p.x, p.y, 'green');
-            this.drawPiece(p.img, p.x, p.y);
+            this.drawPiece(p.image, p.x, p.y);
         });
     }
     private static drawPiece(image: HTMLImageElement, column: number, row: number) {
         this.ctx.drawImage(image, column * Render.squareSize, row * Render.squareSize, Render.squareSize, Render.squareSize);
     }
 
-    private static fillCell(x: number, y: number, style: string | CanvasPattern) {
+    private static drawLegalMoves() {
+        if (Game.selected == null) return;
+        let moves: V2[] = Game.selected.getLegalMoves();
+        moves.forEach(v2 => this.drawCellDot(v2.x + 1, v2.y + 1, 'yellow'));
+    }
+
+    private static fillCell(x: number, y: number, style: CanvasStyle) {
         this.fillRect(x * Render.squareSize, y * Render.squareSize, Render.squareSize, Render.squareSize, style);
     }
-    private static fillRect(x: number, y: number, w: number, h: number, style: string | CanvasPattern) {
+    private static fillRect(x: number, y: number, w: number, h: number, style: CanvasStyle) {
         this.ctx.beginPath();
         this.ctx.fillStyle = style;
         this.ctx.fillRect(x, y, w, h);
+        this.ctx.closePath();
+    }
+
+    private static drawCellDot(x: number, y: number, style: CanvasStyle) {
+        x -= 0.5; y -= 0.5;
+        this.fillCircle(x * Render.squareSize, y * Render.squareSize, Render.squareSize / 4, style);
+    }
+    private static fillCircle(x: number, y: number, radius: number, style: CanvasStyle) {
+        this.ctx.beginPath();
+        this.ctx.arc(x, y, radius, 0, 2 * Math.PI);
+        this.ctx.fillStyle = style;
+        this.ctx.fill();
         this.ctx.closePath();
     }
 }

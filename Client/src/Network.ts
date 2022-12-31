@@ -46,21 +46,21 @@ class Network {
             default: break;
         }
         function receiveConnected(username: string) {
-            Player.amWhite = Math.random() < 0.5;
-            Network.send(MessageType.Start, `${Player.myName} ${Player.amWhite ? 1 : 0}`);
+            Player.white = Math.random() < 0.5;
+            Network.send(MessageType.Start, `${Player.myName} ${Player.white ? 1 : 0}`);
             Player.enemyName = username;
             Game.start();
         }
         function receiveStart(data: string) {
             let args = data.split(' ');
-            if (Game.isGaming()) return;
+            if (Game.isActive()) return;
             Player.enemyName = args[0];
-            Player.amWhite = args[1] == '0'; // 1 when the enemy is white
+            Player.white = args[1] == '0'; // 1 when the enemy is white
             Game.start();
         }
         function receiveMove(move: string) {
             let coords = move.split(' ').map(str => Number.parseInt(str));
-            Game.move(coords[0], Game.mirrorY(coords[1]), coords[2], Game.mirrorY(coords[3]));
+            Game.forceMoveByCoords(coords[0], Game.mirrorY(coords[1]), coords[2], Game.mirrorY(coords[3]));
         }
         function receiveRematch() {
             Player.receiveRematch();

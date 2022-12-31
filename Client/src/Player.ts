@@ -1,16 +1,22 @@
 class Player {
-    static amWhite: boolean;
+    static white: boolean;
     static myName: string = 'Player';
     static enemyName: string = 'Opponent';
     static myScore: number = 0;
     static enemyScore: number = 0;
-
-
-    static updatePlayerNamesAndScores() {
+    static canMove: boolean = false;
+    static restart() {
+        this.updatePlayerNamesAndScoresDisplay();
+        this.receivedRematch = false;
+        this.sentRematch = false;
+        this.canMove = this.white;
+    }
+    static updatePlayerNamesAndScoresDisplay() {
         let firstGame = this.myScore + this.enemyScore == 0;
         Elements.myName.innerText = this.myName + (firstGame ? '' : `(${this.myScore})`);
         Elements.enemyName.innerText = this.enemyName + (firstGame ? '' : `(${this.enemyScore})`);
     }
+
 
     static onVictory() {
         Elements.resultText.innerText = 'You won!';
