@@ -1,6 +1,6 @@
 class Wazir extends Piece {
     protected getImage(): HTMLImageElement {
-        return this.white ? Sprites.wazirWhite : Sprites.wazirBlack;
+        return this.white ? Sprites.WAZIR_WHITE : Sprites.WAZIR_BLACK;
     }
     protected getType(): string {
         return this.white ? 'W' : 'w';

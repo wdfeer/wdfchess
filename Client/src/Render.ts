@@ -1,8 +1,8 @@
 type CanvasStyle = string | CanvasPattern | CanvasGradient;
 class Render {
     static initialize() {
-        this.squareSize = Elements.canvas.width / Game.boardSize
-        this.ctx = Elements.canvas.getContext('2d')!;
+        this.squareSize = Elements.CANVAS.width / Game.BOARD_SIZE
+        this.ctx = Elements.CANVAS.getContext('2d')!;
     }
     static ctx: CanvasRenderingContext2D;
     static squareSize: number;
@@ -15,7 +15,7 @@ class Render {
     }
 
     private static clear() {
-        this.ctx.clearRect(0, 0, Elements.canvas.width, Elements.canvas.height);
+        this.ctx.clearRect(0, 0, Elements.CANVAS.width, Elements.CANVAS.height);
     }
     private static drawGrid() {
         for (var i = 0; i < 8; i++) {

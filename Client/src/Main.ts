@@ -1,21 +1,21 @@
 class Elements {
-    static readonly body = document.querySelector('body')!;
+    static readonly BODY = document.querySelector('body')!;
 
-    static readonly connectForm = this.body.querySelector('#connect-form') as HTMLFormElement;
-    static readonly connectedSuccessfully = this.body.querySelector('#connected-text') as HTMLSpanElement;
+    static readonly CONNECT_FORM = this.BODY.querySelector('#connect-form') as HTMLFormElement;
+    static readonly CONNECTED = this.BODY.querySelector('#connected-text') as HTMLSpanElement;
 
-    static readonly game = this.body.querySelector('#game') as HTMLSpanElement;
-    static readonly canvas = this.game.querySelector('canvas')!;
-    static readonly myName = this.game.querySelector('#my-name') as HTMLSpanElement;
-    static readonly enemyName = this.game.querySelector('#enemy-name') as HTMLSpanElement;
+    static readonly GAME = this.BODY.querySelector('#game') as HTMLSpanElement;
+    static readonly CANVAS = this.GAME.querySelector('canvas')!;
+    static readonly MY_NAME = this.GAME.querySelector('#my-name') as HTMLSpanElement;
+    static readonly ENEMY_NAME = this.GAME.querySelector('#enemy-name') as HTMLSpanElement;
 
-    static readonly gameEndScreen = this.game.querySelector('#post-game') as HTMLSpanElement;
-    static readonly resultText = this.gameEndScreen.querySelector('#game-result') as HTMLSpanElement;
-    static readonly rematchButton = this.gameEndScreen.querySelector('#rematch-button') as HTMLButtonElement;
+    static readonly GAME_END_SCREEN = this.GAME.querySelector('#post-game') as HTMLSpanElement;
+    static readonly GAME_RESULT = this.GAME_END_SCREEN.querySelector('#game-result') as HTMLSpanElement;
+    static readonly GAME_REMATCH_BUTTON = this.GAME_END_SCREEN.querySelector('#rematch-button') as HTMLButtonElement;
 
-    static readonly ipInputElement = this.body.querySelector('#ip-input') as HTMLInputElement;
-    static readonly portInputElement = this.body.querySelector('#port-input') as HTMLInputElement;
-    static readonly usernameInputElement = this.body.querySelector('#username-input') as HTMLInputElement;
+    static readonly INPUT_IP = this.BODY.querySelector('#ip-input') as HTMLInputElement;
+    static readonly INPUT_PORT = this.BODY.querySelector('#port-input') as HTMLInputElement;
+    static readonly INPUT_USERNAME = this.BODY.querySelector('#username-input') as HTMLInputElement;
 
     static enableElement(element: HTMLElement) {
         element.classList.remove('disabled');
@@ -35,15 +35,15 @@ class Elements {
 }
 
 setTimeout(() => {
-    Elements.connectForm.onsubmit = () => {
-        Network.connect(Elements.ipInputElement.value,
-            Number.parseInt(Elements.portInputElement.value),
-            Elements.usernameInputElement.value);
+    Elements.CONNECT_FORM.onsubmit = () => {
+        Network.connect(Elements.INPUT_IP.value,
+            Number.parseInt(Elements.INPUT_PORT.value),
+            Elements.INPUT_USERNAME.value);
         return false;
     };
-    Elements.canvas.onclick = (event: MouseEvent) => {
+    Elements.CANVAS.onclick = (event: MouseEvent) => {
         Game.onCanvasClick(event.offsetX, event.offsetY);
     }
 
-    Elements.rematchButton.onclick = () => Player.sendRematch();
+    Elements.GAME_REMATCH_BUTTON.onclick = () => Player.sendRematch();
 }, 5);

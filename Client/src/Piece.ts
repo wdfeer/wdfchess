@@ -14,8 +14,8 @@ abstract class Piece {
 
     getLegalMoves(): V2[] {
         let allSquares: V2[] = [];
-        for (let x = 0; x < Game.boardSize; x++) {
-            for (let y = 0; y < Game.boardSize; y++) {
+        for (let x = 0; x < Game.BOARD_SIZE; x++) {
+            for (let y = 0; y < Game.BOARD_SIZE; y++) {
                 allSquares.push({ x: x, y: y });
             }
         }

@@ -1,6 +1,6 @@
 class Knight extends Piece {
     protected getImage(): HTMLImageElement {
-        return this.white ? Sprites.knightWhite : Sprites.knightBlack;
+        return this.white ? Sprites.KNIGHT_WHITE : Sprites.KNIGHT_BLACK;
     }
     protected getType(): string {
         return this.white ? 'N' : 'n';

@@ -13,21 +13,21 @@ class Player {
     }
     static updatePlayerNamesAndScoresDisplay() {
         let firstGame = this.myScore + this.enemyScore == 0;
-        Elements.myName.innerText = this.myName + (firstGame ? '' : `(${this.myScore})`);
-        Elements.enemyName.innerText = this.enemyName + (firstGame ? '' : `(${this.enemyScore})`);
+        Elements.MY_NAME.innerText = this.myName + (firstGame ? '' : `(${this.myScore})`);
+        Elements.ENEMY_NAME.innerText = this.enemyName + (firstGame ? '' : `(${this.enemyScore})`);
     }
 
 
     static onVictory() {
-        Elements.resultText.innerText = 'You won!';
+        Elements.GAME_RESULT.innerText = 'You won!';
         Player.myScore++;
     }
     static onDefeat() {
-        Elements.resultText.innerText = 'You lost!';
+        Elements.GAME_RESULT.innerText = 'You lost!';
         Player.enemyScore++;
     }
     static onDraw() {
-        Elements.resultText.innerText = 'Draw!';
+        Elements.GAME_RESULT.innerText = 'Draw!';
     }
 
 

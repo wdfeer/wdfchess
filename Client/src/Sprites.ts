@@ -1,20 +1,20 @@
 class Sprites {
-    static loadPieceImage(path: string) {
+    private static loadImage(path: string): HTMLImageElement {
         let img = new Image(Render.squareSize, Render.squareSize);
         img.src = path;
         Elements.disableElement(img);
-        return Elements.body.appendChild(img);
+        return Elements.BODY.appendChild(img);
     }
 
-    static readonly kingWhite = this.loadPieceImage('./images/kingWhite.png');
-    static readonly kingBlack = this.loadPieceImage('./images/kingBlack.png');
+    static readonly KING_WHITE = this.loadImage('./images/kingWhite.png');
+    static readonly KING_BLACK = this.loadImage('./images/kingBlack.png');
 
-    static readonly knightWhite = this.loadPieceImage('./images/knightWhite.png');
-    static readonly knightBlack = this.loadPieceImage('./images/knightBlack.png');
+    static readonly KNIGHT_WHITE = this.loadImage('./images/knightWhite.png');
+    static readonly KNIGHT_BLACK = this.loadImage('./images/knightBlack.png');
 
-    static readonly pawnWhite = this.loadPieceImage('./images/pawnWhite.png');
-    static readonly pawnBlack = this.loadPieceImage('./images/pawnBlack.png');
+    static readonly PAWN_WHITE = this.loadImage('./images/pawnWhite.png');
+    static readonly PAWN_BLACK = this.loadImage('./images/pawnBlack.png');
 
-    static readonly wazirWhite = this.loadPieceImage('./images/wazirWhite.png');
-    static readonly wazirBlack = this.loadPieceImage('./images/wazirBlack.png');
+    static readonly WAZIR_WHITE = this.loadImage('./images/wazirWhite.png');
+    static readonly WAZIR_BLACK = this.loadImage('./images/wazirBlack.png');
 }

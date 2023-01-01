@@ -1,6 +1,6 @@
 class King extends Piece {
     protected getImage(): HTMLImageElement {
-        return this.white ? Sprites.kingWhite : Sprites.kingBlack;
+        return this.white ? Sprites.KING_WHITE : Sprites.KING_BLACK;
     }
     protected getType(): string {
         return this.white ? 'K' : 'k';

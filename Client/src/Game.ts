@@ -1,16 +1,16 @@
 class Game {
-    static readonly boardSize = 8;
-    static readonly maxPos = this.boardSize - 1;
-    static mirrorX(x: number) { return this.maxPos - x; }
-    static mirrorY(y: number) { return this.maxPos - y; }
+    static readonly BOARD_SIZE = 8;
+    static readonly MAX_POS = this.BOARD_SIZE - 1;
+    static mirrorX(x: number) { return this.MAX_POS - x; }
+    static mirrorY(y: number) { return this.MAX_POS - y; }
 
     static isActive() {
-        return Elements.isActive(Elements.game);
+        return Elements.isActive(Elements.GAME);
     }
 
     static start() {
-        Elements.disableElement(Elements.connectedSuccessfully);
-        Elements.enableElement(Elements.game);
+        Elements.disableElement(Elements.CONNECTED);
+        Elements.enableElement(Elements.GAME);
         Render.initialize();
         this.restart();
     }
@@ -26,9 +26,10 @@ class Game {
             });
         }
 
-        Elements.disableElement(Elements.gameEndScreen);
+        Elements.disableElement(Elements.GAME_END_SCREEN);
 
         Render.redraw();
+        Sounds.NOTIFY.play();
     }
 
 
@@ -48,7 +49,7 @@ class Game {
     }
 
     static endGame(scoreDiff: number) {
-        Elements.enableElement(Elements.gameEndScreen);
+        Elements.enableElement(Elements.GAME_END_SCREEN);
         if (scoreDiff > 0)
             Player.onVictory();
         else if (scoreDiff < 0)
@@ -56,13 +57,14 @@ class Game {
         else
             Player.onDraw();
         Player.updatePlayerNamesAndScoresDisplay();
+        Sounds.NOTIFY.play();
     }
 
 
     private static setDefaultPosition(): void {
         this.pieces = [];
         function addPawns(y: number, white: boolean) {
-            for (let x = 0; x < Game.boardSize; x++) {
+            for (let x = 0; x < Game.BOARD_SIZE; x++) {
                 Game.pieces.push(new Pawn(x, y, white));
             }
         }
@@ -71,9 +73,9 @@ class Game {
         this.pieces.push(new King(4, 0, false));
         this.pieces.push(new King(4, 7, true));
         function addPieces(y: number, white: boolean) {
-            for (let x = 0; x < Game.boardSize; x++) {
+            for (let x = 0; x < Game.BOARD_SIZE; x++) {
                 if (x == 4) continue;
-                let piece: Piece = x == 1 || x == 3 || x == Game.boardSize - 2 ? new Knight(x, y, white) : new Wazir(x, y, white) ;
+                let piece: Piece = x == 1 || x == 3 || x == Game.BOARD_SIZE - 2 ? new Knight(x, y, white) : new Wazir(x, y, white) ;
                 Game.pieces.push(piece);
             }
         }

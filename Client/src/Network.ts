@@ -16,12 +16,12 @@ class Network {
         this.socket.onopen = () => {
             console.log('CONNECTED');
             this.send(MessageType.Connected, username);
-            Elements.disableElement(Elements.connectForm);
-            Elements.connectedSuccessfully.innerHTML =
+            Elements.disableElement(Elements.CONNECT_FORM);
+            Elements.CONNECTED.innerHTML =
                 `Successfully connected to <br>
                 ${hostname}:${port} <br> <br>
                 Waiting for the other player...`;
-            Elements.enableElement(Elements.connectedSuccessfully);
+            Elements.enableElement(Elements.CONNECTED);
         };
 
         this.socket.onclose = () => {

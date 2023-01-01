@@ -13,8 +13,7 @@ class MoveManager {
         }
         this.selected = null;
     }
-
-    static forceMove(moving: Piece, toX: number, toY: number, myMove: boolean = false) {
+    private static forceMove(moving: Piece, toX: number, toY: number, myMove: boolean = false) {
         if (myMove) Network.send(MessageType.Move, `${moving.x} ${moving.y} ${toX} ${toY}`);
         else Player.canMove = true;
 
@@ -32,6 +31,7 @@ class MoveManager {
 
         moving.postMove();
         Render.redraw();
+        Sounds.MOVE.play();
     }
 
     static receiveMove(coords: number[]){
