@@ -9,8 +9,11 @@ class Pawn extends Piece {
     canVirtuallyMove(toX: number, toY: number): boolean {
         let absDiffX = Math.abs(toX - this.x);
         let diffY = toY - this.y;
-        return diffY == -1 && ((absDiffX == 1 && Game.anyPieceOfColorAt(toX, toY, !this.white)) ||
+
+        let canMove1Square = ((absDiffX == 1 && Game.anyPieceOfColorAt(toX, toY, !this.white)) ||
             absDiffX == 0 && !Game.anyPieceAt(toX, toY));
+        return ((diffY == -1 && canMove1Square) ||
+            (diffY == -2 && absDiffX == 0 && this.y == Game.boardSize - 2));
     }
 
     postMove(): void {
