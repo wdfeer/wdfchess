@@ -45,6 +45,7 @@ class Network {
                 return receiveRematch();
             default: break;
         }
+
         function receiveConnected(username: string) {
             Player.white = Math.random() < 0.5;
             Network.send(MessageType.Start, `${Player.myName} ${Player.white ? 1 : 0}`);
@@ -60,7 +61,7 @@ class Network {
         }
         function receiveMove(move: string) {
             let coords = move.split(' ').map(str => Number.parseInt(str));
-            MoveManager.forceMoveByCoords(coords[0], Game.mirrorY(coords[1]), coords[2], Game.mirrorY(coords[3]));
+            MoveManager.receiveMove(coords);
         }
         function receiveRematch() {
             Player.receiveRematch();

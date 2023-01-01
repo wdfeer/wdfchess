@@ -14,4 +14,7 @@ class Sprites {
 
     static readonly pawnWhite = this.loadPieceImage('./images/pawnWhite.png');
     static readonly pawnBlack = this.loadPieceImage('./images/pawnBlack.png');
+
+    static readonly wazirWhite = this.loadPieceImage('./images/wazirWhite.png');
+    static readonly wazirBlack = this.loadPieceImage('./images/wazirBlack.png');
 }
