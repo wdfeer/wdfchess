@@ -26,7 +26,7 @@ class Render {
     }
     private static drawAllPieces() {
         Game.pieces.forEach(p => {
-            if (Game.selected == p)
+            if (MoveManager.selected == p)
                 this.fillCell(p.x, p.y, 'green');
             this.drawPiece(p.image, p.x, p.y);
         });
@@ -36,8 +36,8 @@ class Render {
     }
 
     private static drawLegalMoves() {
-        if (Game.selected == null) return;
-        let moves: V2[] = Game.selected.getLegalMoves();
+        if (MoveManager.selected == null) return;
+        let moves: V2[] = MoveManager.selected.getLegalMoves();
         moves.forEach(v2 => this.drawCellDot(v2.x + 1, v2.y + 1, 'yellow'));
     }
 

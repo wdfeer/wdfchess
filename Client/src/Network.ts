@@ -60,7 +60,7 @@ class Network {
         }
         function receiveMove(move: string) {
             let coords = move.split(' ').map(str => Number.parseInt(str));
-            Game.forceMoveByCoords(coords[0], Game.mirrorY(coords[1]), coords[2], Game.mirrorY(coords[3]));
+            MoveManager.forceMoveByCoords(coords[0], Game.mirrorY(coords[1]), coords[2], Game.mirrorY(coords[3]));
         }
         function receiveRematch() {
             Player.receiveRematch();
